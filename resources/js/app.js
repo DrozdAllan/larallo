@@ -10,7 +10,7 @@ import store from "./store/index";
 
 Vue.use(VueRouter);
 
-Vue.component("app-view", require("./views/App.vue").default);
+Vue.component("app-view", require("./App.vue").default);
 
 const app = new Vue({
     el: "#app",

@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <v-container>
         <h1>coucou zinzin y a rien</h1>
         <h2>{{ count }}</h2>
         <button class="btn" @click="$store.commit('INCREMENT')">
             INCREMENT
         </button>
-    </div>
+    </v-container>
 </template>
 
 <script>

@@ -5513,8 +5513,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: "left-drawer-layout"
+  name: "left-drawer-layout",
+  data: function data() {
+    return {
+      loginForm: false
+    };
+  },
+  methods: {
+    toggleLogin: function toggleLogin() {
+      this.loginForm = !this.loginForm;
+    }
+  }
 });
 
 /***/ }),
@@ -5674,6 +5689,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 var routes = [{
+  path: "/",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_HomeView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/HomeView.vue */ "./resources/js/views/HomeView.vue"));
+  },
+  name: "home"
+}, {
   path: "/example",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_ExampleView_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/ExampleView.vue */ "./resources/js/views/ExampleView.vue"));
@@ -29192,16 +29213,7 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "v-navigation-drawer",
-    {
-      attrs: { app: "" },
-      model: {
-        value: _vm.drawer,
-        callback: function ($$v) {
-          _vm.drawer = $$v
-        },
-        expression: "drawer",
-      },
-    },
+    { attrs: { app: "" } },
     [
       _c(
         "v-sheet",
@@ -29213,12 +29225,28 @@ var render = function () {
             [
               _c("h2", [_vm._v("Logged in as")]),
               _vm._v(" "),
-              _c("v-btn", [_vm._v("Login")]),
+              _c("v-btn", { on: { click: _vm.toggleLogin } }, [
+                _vm._v("Login"),
+              ]),
               _vm._v(" "),
               _c("v-btn", [_vm._v("Register")]),
             ],
             1
           ),
+          _vm._v(" "),
+          _vm.loginForm
+            ? _c(
+                "div",
+                [
+                  _c(
+                    "v-form",
+                    [_c("v-input", { attrs: { label: "zinzin" } })],
+                    1
+                  ),
+                ],
+                1
+              )
+            : _vm._e(),
         ],
         1
       ),
@@ -92349,7 +92377,7 @@ var index = {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_ExampleView_vue":1,"resources_js_views_RienView_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_HomeView_vue":1,"resources_js_views_ExampleView_vue":1,"resources_js_views_RienView_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

@@ -1,23 +1,21 @@
 <template>
     <v-container>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h1 class="text-center">Private channels</h1>
+        <p class="text-center">Work in progress</p>
+        <h1>coucou zinzin y a rien</h1>
+        <h2>{{ count }}</h2>
+        <v-btn @click="$store.commit('INCREMENT')"> INCREMENT </v-btn>
     </v-container>
 </template>
 
 <script>
-    export default {
-        mounted() {
-            console.log('Component mounted.')
-        }
-    }
+import { mapState } from "vuex";
+
+export default {
+    computed: {
+        ...mapState({
+            count: (state) => state.count,
+        }),
+    },
+};
 </script>

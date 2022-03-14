@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <system-bar-layout />
+        <!-- <system-bar-layout /> -->
 
         <app-bar-layout />
 
@@ -11,14 +11,11 @@
         <v-main>
             <router-view />
         </v-main>
-
-        <footer-layout />
     </v-app>
 </template>
 
 <script>
 import AppBarLayout from "./components/AppBarLayout.vue";
-import FooterLayout from "./components/FooterLayout.vue";
 import LeftDrawerLayout from "./components/LeftDrawerLayout.vue";
 import RightDrawerLayout from "./components/RightDrawerLayout.vue";
 import SystemBarLayout from "./components/SystemBarLayout.vue";
@@ -28,7 +25,6 @@ export default {
         AppBarLayout,
         LeftDrawerLayout,
         RightDrawerLayout,
-        FooterLayout,
     },
     data() {
         return {

@@ -7,13 +7,28 @@
             hide-details
             rounded
             solo
+            v-model="message"
         ></v-text-field>
+        <v-btn @click="sendMsg()">send</v-btn>
     </v-footer>
 </template>
 
 <script>
 export default {
-    name: 'footer-layout'
+    name: "footer-layout",
+    data() {
+        return {
+            message: "",
+        };
+    },
+    methods: {
+        sendMsg() {
+            axios.post("/msg", {
+                message: this.message,
+            });
+            this.message = "";
+        },
+    },
 };
 </script>
 

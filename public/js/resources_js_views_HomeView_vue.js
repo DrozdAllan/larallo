@@ -15,7 +15,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      messages: []
+    };
+  },
+  mounted: function mounted() {
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+    var pusher = new Pusher("3d65b4a1de6a1ad007ea", {
+      cluster: "eu"
+    }); // var channel = pusher.subscribe("my-channel");
+
+    Echo.join('my-channel');
+    Echo.channel("my-channel").listen("my-event", function (e) {
+      console.log(e);
+    }); // channel.bind("my-event", (data, members) => {
+    //     this.messages.push(data);
+    //     console.log(members.count);
+    // });
+  }
+});
 
 /***/ }),
 
@@ -103,7 +140,39 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-container", [_c("h4", [_vm._v("Welcome to Larallo")])])
+  return _c("v-container", [
+    _c("h1", { staticClass: "text-center" }, [_vm._v("Main Channel")]),
+    _vm._v(" "),
+    _c("p", { staticClass: "text-center" }, [
+      _vm._v("\n        This channel is public, don't send private data\n    "),
+    ]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v("\n        Publish an event to channel "),
+      _c("code", [_vm._v("my-channel")]),
+      _vm._v(" with event name\n        "),
+      _c("code", [_vm._v("my-event")]),
+      _vm._v("; it will appear below:\n    "),
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { id: "app" } }, [
+      _c(
+        "ul",
+        _vm._l(_vm.messages, function (message, index) {
+          return _c("li", { key: index }, [
+            _vm._v(
+              "\n                From " +
+                _vm._s(message.username) +
+                " : " +
+                _vm._s(message.message) +
+                "\n            "
+            ),
+          ])
+        }),
+        0
+      ),
+    ]),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

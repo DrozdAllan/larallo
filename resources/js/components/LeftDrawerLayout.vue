@@ -7,8 +7,14 @@
                     <v-btn @click="logout">Logout</v-btn>
                 </div>
                 <div v-else>
-                    <v-btn @click="toggleLogin">Login</v-btn>
-                    <v-btn @click="toggleRegister">Register</v-btn>
+                    <v-btn @click="toggleLogin" :color="loginForm ? 'lime' : ''"
+                        >Login</v-btn
+                    >
+                    <v-btn
+                        @click="toggleRegister"
+                        :color="registerForm ? 'lime' : ''"
+                        >Register</v-btn
+                    >
 
                     <v-form
                         v-if="loginForm"
@@ -91,21 +97,24 @@
             <router-link :to="{ name: 'home' }">
                 <v-list-item link>
                     <v-list-item-content>
-                        <v-list-item-title> Home </v-list-item-title>
+                        <v-list-item-title> Main Channel </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </router-link>
             <router-link :to="{ name: 'example' }">
                 <v-list-item link>
                     <v-list-item-content>
-                        <v-list-item-title> Example </v-list-item-title>
+                        <v-list-item-title>
+                            Private Channels<br />
+                            (work in progress)
+                        </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </router-link>
             <router-link :to="{ name: 'rien' }">
                 <v-list-item link>
                     <v-list-item-content>
-                        <v-list-item-title> Rien </v-list-item-title>
+                        <v-list-item-title> About </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </router-link>
@@ -161,9 +170,11 @@ export default {
         },
         toggleLogin: function () {
             this.loginForm = !this.loginForm;
+            this.registerForm = false;
         },
         toggleRegister: function () {
             this.registerForm = !this.registerForm;
+            this.loginForm = false;
         },
         getUser() {
             axios.get("/api/user").then((Response) => {
@@ -179,6 +190,8 @@ export default {
                     })
                     .then((Response) => {
                         this.getUser();
+                        // TODO: remove this reload after setting up VueX
+                        location.reload();
                     });
             }
         },
@@ -193,9 +206,9 @@ export default {
                     })
                     .then((Response) => {
                         console.log(Response);
-                        // TODO: faut refresh les cookies entre 2 inscriptions sinon la deuxième ne marche pas
                         if (Response.status == 201) {
-                            alert("account created");
+                            // faut refresh les cookies entre 2 inscriptions sinon la deuxième ne marche pas
+                            location.reload();
                         }
                     });
             }

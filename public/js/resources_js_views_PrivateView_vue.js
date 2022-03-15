@@ -112,7 +112,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("v-container", [
-    _c("h1", { staticClass: "text-center primary--text" }, [
+    _c("h2", { staticClass: "text-center primary--text py-3" }, [
       _vm._v("Private channels"),
     ]),
     _vm._v(" "),

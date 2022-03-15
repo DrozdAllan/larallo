@@ -1,10 +1,25 @@
 <template>
     <v-container>
-        <h1 class="text-center primary--text">Main Channel</h1>
+        <h2 class="text-center primary--text py-3">Main Channel</h2>
         <div>
             <ul>
-                <li v-for="(message, index) in messages" :key="index">
-                    <b>{{ message.username }}</b> : {{ message.message }}
+                <li
+                    v-for="(message, index) in messages"
+                    :key="index"
+                    class="py-1"
+                >
+                    <b
+                        v-if="user != null"
+                        :class="
+                            message.username == user.name ? 'primary--text' : ''
+                        "
+                    >
+                        {{ message.username }}</b
+                    >
+                    <b v-else>
+                        {{ message.username }}
+                    </b>
+                    : {{ message.message }}
                 </li>
             </ul>
         </div>
@@ -32,6 +47,11 @@ export default {
         channel.listen("ChatMessageEvent", (data) => {
             this.messages.push(data);
         });
+    },
+    computed: {
+        user() {
+            return this.$store.getters.user;
+        },
     },
 };
 </script>

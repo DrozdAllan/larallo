@@ -5463,8 +5463,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "app-bar-layout",
+  data: function data() {
+    return {
+      dialog: false
+    };
+  },
   methods: {
     openDrawer: function openDrawer() {
       this.$store.dispatch("updateDrawer", true);
@@ -5490,6 +5517,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
 //
 //
 //
@@ -5730,6 +5761,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6060,7 +6100,8 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use((vuetify__WEBPACK_IMPORTED_MODUL
         primary: "#00796B",
         secondary: "#696969",
         accent: "#8c9eff",
-        error: "#b71c1c"
+        error: "#b71c1c",
+        appBar: "#f5fffe"
       }
     }
   }
@@ -35563,14 +35604,22 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "v-app-bar",
-    { attrs: { app: "", "clipped-right": "", flat: "" } },
+    {
+      attrs: {
+        app: "",
+        "clipped-left": "",
+        "clipped-right": "",
+        dense: "",
+        color: "appBar",
+      },
+    },
     [
       _c(
         "v-col",
         { staticClass: "py-0", attrs: { cols: "2" } },
         [
           _c("v-app-bar-nav-icon", {
-            staticClass: "pa-0 hidden-md-and-up",
+            staticClass: "pa-0 hidden-lg-and-up",
             attrs: { color: "primary" },
             on: {
               click: function ($event) {
@@ -35585,13 +35634,86 @@ var render = function () {
       _c(
         "v-col",
         {
-          staticClass: "px-0 text-caption text-md-subtitle-2 text-center",
+          staticClass: "px-0 text-subtitle-2 text-center",
           attrs: { cols: "8" },
         },
         [
-          _vm._v(
-            '\n        You can use the main channel without logging in, user1 and user2 are\n        available with the password "password" to see users online.\n    '
-          ),
+          !this.$vuetify.breakpoint.xs
+            ? _c("span", [
+                _vm._v(
+                  '\n            Note : you can use the main channel without logging in, user1\n            and user2 are available with the password "password" to see\n            users online.\n        '
+                ),
+              ])
+            : _c(
+                "span",
+                [
+                  _c(
+                    "v-dialog",
+                    {
+                      scopedSlots: _vm._u([
+                        {
+                          key: "activator",
+                          fn: function (ref) {
+                            var on = ref.on
+                            var attrs = ref.attrs
+                            return [
+                              _c(
+                                "v-btn",
+                                _vm._g(
+                                  _vm._b(
+                                    {
+                                      attrs: {
+                                        text: "",
+                                        outlined: "",
+                                        color: "primary",
+                                      },
+                                    },
+                                    "v-btn",
+                                    attrs,
+                                    false
+                                  ),
+                                  on
+                                ),
+                                [_vm._v("Note")]
+                              ),
+                            ]
+                          },
+                        },
+                      ]),
+                      model: {
+                        value: _vm.dialog,
+                        callback: function ($$v) {
+                          _vm.dialog = $$v
+                        },
+                        expression: "dialog",
+                      },
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        {
+                          on: {
+                            click: function ($event) {
+                              _vm.dialog = false
+                            },
+                          },
+                        },
+                        [
+                          _c("v-card-text", { staticClass: "pa-2" }, [
+                            _vm._v(
+                              '\n                        You can use the main channel without logging in,\n                        user1 and user2 are available with the password\n                        "password" to see users online.\n                    '
+                            ),
+                          ]),
+                        ],
+                        1
+                      ),
+                    ],
+                    1
+                  ),
+                ],
+                1
+              ),
         ]
       ),
       _vm._v(" "),
@@ -35602,7 +35724,7 @@ var render = function () {
           _c(
             "v-btn",
             {
-              staticClass: "pa-0 hidden-md-and-up",
+              staticClass: "pa-0 hidden-lg-and-up",
               attrs: { icon: "", color: "primary" },
               on: {
                 click: function ($event) {
@@ -35646,7 +35768,8 @@ var render = function () {
   return _c(
     "v-navigation-drawer",
     {
-      attrs: { app: "", value: _vm.drawer },
+      staticClass: "pt-4",
+      attrs: { app: "", clipped: "", value: _vm.drawer },
       on: {
         input: function ($event) {
           return _vm.checkInput($event)
@@ -35654,236 +35777,226 @@ var render = function () {
       },
     },
     [
-      _c(
-        "v-sheet",
-        { attrs: { width: "100%" } },
-        [
-          _c("v-container", { staticClass: "justify-center text-center" }, [
-            _vm.user
-              ? _c(
-                  "div",
-                  [
-                    _c("h3", { staticClass: "py-4" }, [
-                      _vm._v("Logged in as " + _vm._s(_vm.user.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        staticClass: "mr-4",
-                        attrs: { outlined: "", color: "primary" },
-                        on: { click: _vm.logout },
-                      },
-                      [_vm._v("Logout")]
-                    ),
-                  ],
-                  1
-                )
-              : _c(
-                  "div",
-                  [
-                    _c(
-                      "v-btn",
-                      {
-                        class: _vm.loginForm ? "" : "primary--text",
-                        attrs: { color: _vm.loginForm ? "primary" : "" },
-                        on: { click: _vm.toggleLogin },
-                      },
-                      [_vm._v("Login")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "v-btn",
-                      {
-                        class: _vm.registerForm ? "" : "primary--text",
-                        attrs: { color: _vm.registerForm ? "primary" : "" },
-                        on: { click: _vm.toggleRegister },
-                      },
-                      [_vm._v("Register")]
-                    ),
-                    _vm._v(" "),
-                    _vm.loginForm
-                      ? _c(
-                          "v-form",
-                          {
-                            ref: "loginForm",
-                            attrs: { "lazy-validation": "" },
-                            model: {
-                              value: _vm.loginValid,
-                              callback: function ($$v) {
-                                _vm.loginValid = $$v
-                              },
-                              expression: "loginValid",
-                            },
-                          },
-                          [
-                            _c("v-text-field", {
-                              attrs: {
-                                counter: 10,
-                                rules: _vm.usernameRules,
-                                label: "Username",
-                                required: "",
-                              },
-                              model: {
-                                value: _vm.username,
-                                callback: function ($$v) {
-                                  _vm.username = $$v
-                                },
-                                expression: "username",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("v-text-field", {
-                              attrs: {
-                                "append-icon": _vm.show1
-                                  ? "mdi-eye"
-                                  : "mdi-eye-off",
-                                rules: _vm.passwordRules,
-                                type: _vm.show1 ? "text" : "password",
-                                name: "input-10-1",
-                                label: "Password",
-                                hint: "At least 8 characters",
-                                counter: "",
-                              },
-                              on: {
-                                "click:append": function ($event) {
-                                  _vm.show1 = !_vm.show1
-                                },
-                              },
-                              model: {
-                                value: _vm.password,
-                                callback: function ($$v) {
-                                  _vm.password = $$v
-                                },
-                                expression: "password",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "v-btn",
-                              {
-                                staticClass: "mr-4",
-                                attrs: {
-                                  disabled: !_vm.loginValid,
-                                  large: "",
-                                  outlined: "",
-                                  color: "primary",
-                                },
-                                on: { click: _vm.validateLogin },
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        Validate\n                    "
-                                ),
-                              ]
-                            ),
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.registerForm
-                      ? _c(
-                          "v-form",
-                          {
-                            ref: "registerForm",
-                            attrs: { "lazy-validation": "" },
-                            model: {
-                              value: _vm.registerValid,
-                              callback: function ($$v) {
-                                _vm.registerValid = $$v
-                              },
-                              expression: "registerValid",
-                            },
-                          },
-                          [
-                            _c("v-text-field", {
-                              attrs: {
-                                counter: 10,
-                                rules: _vm.emailRules,
-                                label: "Email",
-                                required: "",
-                              },
-                              model: {
-                                value: _vm.emailRegister,
-                                callback: function ($$v) {
-                                  _vm.emailRegister = $$v
-                                },
-                                expression: "emailRegister",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("v-text-field", {
-                              attrs: {
-                                counter: 10,
-                                rules: _vm.usernameRules,
-                                label: "Username",
-                                required: "",
-                              },
-                              model: {
-                                value: _vm.usernameRegister,
-                                callback: function ($$v) {
-                                  _vm.usernameRegister = $$v
-                                },
-                                expression: "usernameRegister",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c("v-text-field", {
-                              attrs: {
-                                "append-icon": _vm.show2
-                                  ? "mdi-eye"
-                                  : "mdi-eye-off",
-                                rules: _vm.passwordRules,
-                                type: _vm.show2 ? "text" : "password",
-                                name: "input-10-1",
-                                label: "Password",
-                                hint: "At least 8 characters",
-                                counter: "",
-                              },
-                              on: {
-                                "click:append": function ($event) {
-                                  _vm.show2 = !_vm.show2
-                                },
-                              },
-                              model: {
-                                value: _vm.passwordRegister,
-                                callback: function ($$v) {
-                                  _vm.passwordRegister = $$v
-                                },
-                                expression: "passwordRegister",
-                              },
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "v-btn",
-                              {
-                                staticClass: "mr-4",
-                                attrs: {
-                                  disabled: !_vm.registerValid,
-                                  large: "",
-                                  outlined: "",
-                                  color: "primary",
-                                },
-                                on: { click: _vm.validateRegister },
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        Validate\n                    "
-                                ),
-                              ]
-                            ),
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                  ],
-                  1
+      _c("v-container", { staticClass: "justify-center text-center" }, [
+        _vm.user
+          ? _c(
+              "div",
+              [
+                _c("h3", [_vm._v("Logged in as " + _vm._s(_vm.user.name))]),
+                _vm._v(" "),
+                _c(
+                  "v-btn",
+                  {
+                    attrs: { outlined: "", color: "primary" },
+                    on: { click: _vm.logout },
+                  },
+                  [_vm._v("Logout")]
                 ),
-          ]),
-        ],
-        1
-      ),
+              ],
+              1
+            )
+          : _c(
+              "div",
+              [
+                _c(
+                  "v-btn",
+                  {
+                    class: _vm.loginForm ? "" : "primary--text",
+                    attrs: { color: _vm.loginForm ? "primary" : "" },
+                    on: { click: _vm.toggleLogin },
+                  },
+                  [_vm._v("Login")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-btn",
+                  {
+                    class: _vm.registerForm ? "" : "primary--text",
+                    attrs: { color: _vm.registerForm ? "primary" : "" },
+                    on: { click: _vm.toggleRegister },
+                  },
+                  [_vm._v("Register")]
+                ),
+                _vm._v(" "),
+                _vm.loginForm
+                  ? _c(
+                      "v-form",
+                      {
+                        ref: "loginForm",
+                        attrs: { "lazy-validation": "" },
+                        model: {
+                          value: _vm.loginValid,
+                          callback: function ($$v) {
+                            _vm.loginValid = $$v
+                          },
+                          expression: "loginValid",
+                        },
+                      },
+                      [
+                        _c("v-text-field", {
+                          attrs: {
+                            counter: 10,
+                            rules: _vm.usernameRules,
+                            label: "Username",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.username,
+                            callback: function ($$v) {
+                              _vm.username = $$v
+                            },
+                            expression: "username",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": _vm.show1
+                              ? "mdi-eye"
+                              : "mdi-eye-off",
+                            rules: _vm.passwordRules,
+                            type: _vm.show1 ? "text" : "password",
+                            name: "input-10-1",
+                            label: "Password",
+                            hint: "At least 8 characters",
+                            counter: "",
+                          },
+                          on: {
+                            "click:append": function ($event) {
+                              _vm.show1 = !_vm.show1
+                            },
+                          },
+                          model: {
+                            value: _vm.password,
+                            callback: function ($$v) {
+                              _vm.password = $$v
+                            },
+                            expression: "password",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "mr-4",
+                            attrs: {
+                              disabled: !_vm.loginValid,
+                              large: "",
+                              outlined: "",
+                              color: "primary",
+                            },
+                            on: { click: _vm.validateLogin },
+                          },
+                          [
+                            _vm._v(
+                              "\n                    Validate\n                "
+                            ),
+                          ]
+                        ),
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.registerForm
+                  ? _c(
+                      "v-form",
+                      {
+                        ref: "registerForm",
+                        attrs: { "lazy-validation": "" },
+                        model: {
+                          value: _vm.registerValid,
+                          callback: function ($$v) {
+                            _vm.registerValid = $$v
+                          },
+                          expression: "registerValid",
+                        },
+                      },
+                      [
+                        _c("v-text-field", {
+                          attrs: {
+                            counter: 10,
+                            rules: _vm.emailRules,
+                            label: "Email",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.emailRegister,
+                            callback: function ($$v) {
+                              _vm.emailRegister = $$v
+                            },
+                            expression: "emailRegister",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            counter: 10,
+                            rules: _vm.usernameRules,
+                            label: "Username",
+                            required: "",
+                          },
+                          model: {
+                            value: _vm.usernameRegister,
+                            callback: function ($$v) {
+                              _vm.usernameRegister = $$v
+                            },
+                            expression: "usernameRegister",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": _vm.show2
+                              ? "mdi-eye"
+                              : "mdi-eye-off",
+                            rules: _vm.passwordRules,
+                            type: _vm.show2 ? "text" : "password",
+                            name: "input-10-1",
+                            label: "Password",
+                            hint: "At least 8 characters",
+                            counter: "",
+                          },
+                          on: {
+                            "click:append": function ($event) {
+                              _vm.show2 = !_vm.show2
+                            },
+                          },
+                          model: {
+                            value: _vm.passwordRegister,
+                            callback: function ($$v) {
+                              _vm.passwordRegister = $$v
+                            },
+                            expression: "passwordRegister",
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "v-btn",
+                          {
+                            staticClass: "mr-4",
+                            attrs: {
+                              disabled: !_vm.registerValid,
+                              large: "",
+                              outlined: "",
+                              color: "primary",
+                            },
+                            on: { click: _vm.validateRegister },
+                          },
+                          [
+                            _vm._v(
+                              "\n                    Validate\n                "
+                            ),
+                          ]
+                        ),
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+              ],
+              1
+            ),
+      ]),
       _vm._v(" "),
       _c(
         "v-list",
@@ -35966,6 +36079,7 @@ var render = function () {
   return _c(
     "v-navigation-drawer",
     {
+      staticClass: "pa-4",
       attrs: { app: "", clipped: "", right: "", value: _vm.onlineUsers },
       on: {
         input: function ($event) {
@@ -35974,58 +36088,66 @@ var render = function () {
       },
     },
     [
-      _vm.user
-        ? _c(
-            "div",
-            { staticClass: "text-center" },
-            [
-              _vm.users.length == 1
-                ? _c("span", [_vm._v(" There is ")])
-                : _c("span", [_vm._v(" There are ")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "primary--text font-weight-bold" }, [
-                _vm._v(
-                  "\n            " + _vm._s(_vm.users.length) + "\n        "
+      _c("v-container", { staticClass: "justify-center text-center" }, [
+        _vm.user
+          ? _c(
+              "div",
+              { staticClass: "text-center" },
+              [
+                _vm.users.length == 1
+                  ? _c("span", [_vm._v(" There is ")])
+                  : _c("span", [_vm._v(" There are ")]),
+                _vm._v(" "),
+                _c("span", { staticClass: "primary--text font-weight-bold" }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.users.length) +
+                      "\n            "
+                  ),
+                ]),
+                _vm._v("\n            user"),
+                _vm.users.length > 1 ? _c("span", [_vm._v("s")]) : _vm._e(),
+                _vm._v("\n            online\n            "),
+                _c(
+                  "v-list",
+                  _vm._l(_vm.users, function (user, index) {
+                    return _c(
+                      "v-list-item",
+                      { key: index, attrs: { link: "" } },
+                      [
+                        _c(
+                          "v-list-item-content",
+                          [
+                            _c(
+                              "v-list-item-title",
+                              { staticClass: "primary--text font-weight-bold" },
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(user.name)
+                                ),
+                              ]
+                            ),
+                          ],
+                          1
+                        ),
+                      ],
+                      1
+                    )
+                  }),
+                  1
                 ),
-              ]),
-              _vm._v("\n        user"),
-              _vm.users.length > 1 ? _c("span", [_vm._v("s")]) : _vm._e(),
-              _vm._v("\n        online\n        "),
-              _c(
-                "v-list",
-                _vm._l(_vm.users, function (user, index) {
-                  return _c(
-                    "v-list-item",
-                    { key: index, attrs: { link: "" } },
-                    [
-                      _c(
-                        "v-list-item-content",
-                        [
-                          _c(
-                            "v-list-item-title",
-                            { staticClass: "primary--text font-weight-bold" },
-                            [
-                              _vm._v(
-                                "\n                        " + _vm._s(user.name)
-                              ),
-                            ]
-                          ),
-                        ],
-                        1
-                      ),
-                    ],
-                    1
-                  )
-                }),
-                1
+              ],
+              1
+            )
+          : _c("div", { staticClass: "text-center" }, [
+              _vm._v(
+                "\n            You must log in to see online users\n        "
               ),
-            ],
-            1
-          )
-        : _c("div", { staticClass: "text-center" }, [
-            _vm._v("You must login to see online users"),
-          ]),
-    ]
+            ]),
+      ]),
+    ],
+    1
   )
 }
 var staticRenderFns = []

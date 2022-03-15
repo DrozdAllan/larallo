@@ -115,7 +115,7 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("v-container", { staticClass: "text-center" }, [
-    _c("h1", { staticClass: "text-center primary--text" }, [
+    _c("h2", { staticClass: "text-center primary--text py-3" }, [
       _vm._v("About this App"),
     ]),
     _vm._v("\n    This chat app is made by\n    "),

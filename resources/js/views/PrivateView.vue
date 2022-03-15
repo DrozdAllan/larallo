@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h1 class="text-center primary--text">Private channels</h1>
+        <h2 class="text-center primary--text py-3">Private channels</h2>
         <p class="text-center">Work in progress</p>
     </v-container>
 </template>

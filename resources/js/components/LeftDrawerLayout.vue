@@ -1,107 +1,111 @@
 <template>
-    <v-navigation-drawer app :value="drawer" @input="checkInput($event)">
-        <v-sheet width="100%">
-            <v-container class="justify-center text-center">
-                <div v-if="user">
-                    <h3 class="py-4">Logged in as {{ user.name }}</h3>
-                    <v-btn outlined color="primary" class="mr-4" @click="logout"
-                        >Logout</v-btn
-                    >
-                </div>
-                <div v-else>
-                    <v-btn
-                        @click="toggleLogin"
-                        :color="loginForm ? 'primary' : ''"
-                        :class="loginForm ? '' : 'primary--text'"
-                        >Login</v-btn
-                    >
-                    <v-btn
-                        @click="toggleRegister"
-                        :color="registerForm ? 'primary' : ''"
-                        :class="registerForm ? '' : 'primary--text'"
-                        >Register</v-btn
-                    >
+    <v-navigation-drawer
+        app
+        clipped
+        :value="drawer"
+        @input="checkInput($event)"
+        class="pt-4"
+    >
+        <v-container class="justify-center text-center">
+            <div v-if="user">
+                <h3>Logged in as {{ user.name }}</h3>
+                <v-btn outlined color="primary" @click="logout"
+                    >Logout</v-btn
+                >
+            </div>
+            <div v-else>
+                <v-btn
+                    @click="toggleLogin"
+                    :color="loginForm ? 'primary' : ''"
+                    :class="loginForm ? '' : 'primary--text'"
+                    >Login</v-btn
+                >
+                <v-btn
+                    @click="toggleRegister"
+                    :color="registerForm ? 'primary' : ''"
+                    :class="registerForm ? '' : 'primary--text'"
+                    >Register</v-btn
+                >
 
-                    <v-form
-                        v-if="loginForm"
-                        ref="loginForm"
-                        v-model="loginValid"
-                        lazy-validation
+                <v-form
+                    v-if="loginForm"
+                    ref="loginForm"
+                    v-model="loginValid"
+                    lazy-validation
+                >
+                    <v-text-field
+                        v-model="username"
+                        :counter="10"
+                        :rules="usernameRules"
+                        label="Username"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="password"
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :rules="passwordRules"
+                        :type="show1 ? 'text' : 'password'"
+                        name="input-10-1"
+                        label="Password"
+                        hint="At least 8 characters"
+                        counter
+                        @click:append="show1 = !show1"
+                    ></v-text-field>
+                    <v-btn
+                        :disabled="!loginValid"
+                        large
+                        outlined
+                        color="primary"
+                        class="mr-4"
+                        @click="validateLogin"
                     >
-                        <v-text-field
-                            v-model="username"
-                            :counter="10"
-                            :rules="usernameRules"
-                            label="Username"
-                            required
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="password"
-                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :rules="passwordRules"
-                            :type="show1 ? 'text' : 'password'"
-                            name="input-10-1"
-                            label="Password"
-                            hint="At least 8 characters"
-                            counter
-                            @click:append="show1 = !show1"
-                        ></v-text-field>
-                        <v-btn
-                            :disabled="!loginValid"
-                            large
-                            outlined
-                            color="primary"
-                            class="mr-4"
-                            @click="validateLogin"
-                        >
-                            Validate
-                        </v-btn>
-                    </v-form>
-                    <v-form
-                        v-if="registerForm"
-                        ref="registerForm"
-                        v-model="registerValid"
-                        lazy-validation
+                        Validate
+                    </v-btn>
+                </v-form>
+                <v-form
+                    v-if="registerForm"
+                    ref="registerForm"
+                    v-model="registerValid"
+                    lazy-validation
+                >
+                    <v-text-field
+                        v-model="emailRegister"
+                        :counter="10"
+                        :rules="emailRules"
+                        label="Email"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="usernameRegister"
+                        :counter="10"
+                        :rules="usernameRules"
+                        label="Username"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="passwordRegister"
+                        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :rules="passwordRules"
+                        :type="show2 ? 'text' : 'password'"
+                        name="input-10-1"
+                        label="Password"
+                        hint="At least 8 characters"
+                        counter
+                        @click:append="show2 = !show2"
+                    ></v-text-field>
+                    <v-btn
+                        :disabled="!registerValid"
+                        large
+                        outlined
+                        color="primary"
+                        class="mr-4"
+                        @click="validateRegister"
                     >
-                        <v-text-field
-                            v-model="emailRegister"
-                            :counter="10"
-                            :rules="emailRules"
-                            label="Email"
-                            required
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="usernameRegister"
-                            :counter="10"
-                            :rules="usernameRules"
-                            label="Username"
-                            required
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="passwordRegister"
-                            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :rules="passwordRules"
-                            :type="show2 ? 'text' : 'password'"
-                            name="input-10-1"
-                            label="Password"
-                            hint="At least 8 characters"
-                            counter
-                            @click:append="show2 = !show2"
-                        ></v-text-field>
-                        <v-btn
-                            :disabled="!registerValid"
-                            large
-                            outlined
-                            color="primary"
-                            class="mr-4"
-                            @click="validateRegister"
-                        >
-                            Validate
-                        </v-btn>
-                    </v-form>
-                </div>
-            </v-container>
-        </v-sheet>
+                        Validate
+                    </v-btn>
+                </v-form>
+            </div>
+        </v-container>
 
         <v-list shaped>
             <v-list-item link :to="{ name: 'main' }">

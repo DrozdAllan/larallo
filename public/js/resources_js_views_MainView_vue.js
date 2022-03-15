@@ -73,6 +73,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -92,6 +107,11 @@ __webpack_require__.r(__webpack_exports__);
     channel.listen("ChatMessageEvent", function (data) {
       _this.messages.push(data);
     });
+  },
+  computed: {
+    user: function user() {
+      return this.$store.getters.user;
+    }
   }
 });
 
@@ -387,7 +407,7 @@ var render = function () {
   return _c(
     "v-container",
     [
-      _c("h1", { staticClass: "text-center primary--text" }, [
+      _c("h2", { staticClass: "text-center primary--text py-3" }, [
         _vm._v("Main Channel"),
       ]),
       _vm._v(" "),
@@ -395,9 +415,34 @@ var render = function () {
         _c(
           "ul",
           _vm._l(_vm.messages, function (message, index) {
-            return _c("li", { key: index }, [
-              _c("b", [_vm._v(_vm._s(message.username))]),
-              _vm._v(" : " + _vm._s(message.message) + "\n            "),
+            return _c("li", { key: index, staticClass: "py-1" }, [
+              _vm.user != null
+                ? _c(
+                    "b",
+                    {
+                      class:
+                        message.username == _vm.user.name
+                          ? "primary--text"
+                          : "",
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " + _vm._s(message.username)
+                      ),
+                    ]
+                  )
+                : _c("b", [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(message.username) +
+                        "\n                "
+                    ),
+                  ]),
+              _vm._v(
+                "\n                : " +
+                  _vm._s(message.message) +
+                  "\n            "
+              ),
             ])
           }),
           0

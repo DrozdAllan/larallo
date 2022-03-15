@@ -1,25 +1,47 @@
 <template>
-    <v-app-bar app clipped-right flat>
+    <v-app-bar app clipped-left clipped-right dense color="appBar">
         <v-col cols="2" class="py-0">
             <v-app-bar-nav-icon
                 color="primary"
-                class="pa-0 hidden-md-and-up"
+                class="pa-0 hidden-lg-and-up"
                 @click="openDrawer()"
             >
             </v-app-bar-nav-icon>
         </v-col>
-        <v-col
-            cols="8"
-            class="px-0 text-caption text-md-subtitle-2 text-center"
-        >
-            You can use the main channel without logging in, user1 and user2 are
-            available with the password "password" to see users online.
+        <v-col cols="8" class="px-0 text-subtitle-2 text-center">
+            <span v-if="!this.$vuetify.breakpoint.xs">
+                Note : you can use the main channel without logging in, user1
+                and user2 are available with the password "password" to see
+                users online.
+            </span>
+            <span v-else>
+                <v-dialog v-model="dialog">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                            text
+                            outlined
+                            v-bind="attrs"
+                            v-on="on"
+                            color="primary"
+                            >Note</v-btn
+                        >
+                    </template>
+
+                    <v-card @click="dialog = false">
+                        <v-card-text class="pa-2">
+                            You can use the main channel without logging in,
+                            user1 and user2 are available with the password
+                            "password" to see users online.
+                        </v-card-text>
+                    </v-card>
+                </v-dialog>
+            </span>
         </v-col>
         <v-col cols="2" class="py-0">
             <v-btn
                 icon
                 color="primary"
-                class="pa-0 hidden-md-and-up"
+                class="pa-0 hidden-lg-and-up"
                 @click="openOnlineUsers()"
             >
                 <v-icon>mdi-account-circle</v-icon>
@@ -42,6 +64,11 @@
 <script>
 export default {
     name: "app-bar-layout",
+    data() {
+        return {
+            dialog: false,
+        };
+    },
     methods: {
         openDrawer() {
             this.$store.dispatch("updateDrawer", true);

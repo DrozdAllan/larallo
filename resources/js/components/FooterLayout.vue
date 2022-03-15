@@ -1,15 +1,18 @@
 <template>
     <v-footer app color="transparent" height="72" inset>
-        <v-text-field
-            background-color="grey lighten-1"
-            dense
-            flat
-            hide-details
-            rounded
-            solo
-            v-model="message"
-        ></v-text-field>
-        <v-btn @click="sendMsg()">send</v-btn>
+        <v-row dense>
+            <v-text-field
+                background-color="grey lighten-3"
+                flat
+                rounded
+                filled
+                v-model="message"
+                append-outer-icon="mdi-send"
+                @click:append-outer="sendMsg()"
+                @keydown.enter="sendMsg()"
+                label="Enter your message (do not send private data)"
+            ></v-text-field>
+        </v-row>
     </v-footer>
 </template>
 

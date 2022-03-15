@@ -1,9 +1,6 @@
 <template>
     <v-container>
-        <h1 class="text-center">Main Channel</h1>
-        <p class="text-center">
-            This channel is public, don't send private data
-        </p>
+        <h1 class="text-center primary--text">Main Channel</h1>
         <div>
             <ul>
                 <li v-for="(message, index) in messages" :key="index">
@@ -27,14 +24,13 @@ export default {
             messages: [],
         };
     },
-    mounted: function () {
+    mounted() {
         // TODO: Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+        // Pusher.logToConsole = true;
 
-        var channel = Echo.channel("my-channel");
-        channel.listen(".my-event", (data) => {
+        var channel = Echo.channel("MainChannel");
+        channel.listen("ChatMessageEvent", (data) => {
             this.messages.push(data);
-            // console.log(members.count);
         });
     },
 };

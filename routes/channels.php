@@ -20,6 +20,5 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('online', function ($user) {
     if (auth()->check()) {
         return $user->toArray();
-        // return $user->name->toArray();
     }
 });

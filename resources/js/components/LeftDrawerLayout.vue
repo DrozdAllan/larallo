@@ -1,18 +1,24 @@
 <template>
-    <v-navigation-drawer app>
-        <v-sheet color="grey lighten-5" width="100%">
+    <v-navigation-drawer app :value="drawer" @input="checkInput($event)">
+        <v-sheet width="100%">
             <v-container class="justify-center text-center">
                 <div v-if="user">
-                    <h2>Logged in as {{ user.name }}</h2>
-                    <v-btn @click="logout">Logout</v-btn>
+                    <h3 class="py-4">Logged in as {{ user.name }}</h3>
+                    <v-btn outlined color="primary" class="mr-4" @click="logout"
+                        >Logout</v-btn
+                    >
                 </div>
                 <div v-else>
-                    <v-btn @click="toggleLogin" :color="loginForm ? 'lime' : ''"
+                    <v-btn
+                        @click="toggleLogin"
+                        :color="loginForm ? 'primary' : ''"
+                        :class="loginForm ? '' : 'primary--text'"
                         >Login</v-btn
                     >
                     <v-btn
                         @click="toggleRegister"
-                        :color="registerForm ? 'lime' : ''"
+                        :color="registerForm ? 'primary' : ''"
+                        :class="registerForm ? '' : 'primary--text'"
                         >Register</v-btn
                     >
 
@@ -42,7 +48,9 @@
                         ></v-text-field>
                         <v-btn
                             :disabled="!loginValid"
-                            color="success"
+                            large
+                            outlined
+                            color="primary"
                             class="mr-4"
                             @click="validateLogin"
                         >
@@ -82,7 +90,9 @@
                         ></v-text-field>
                         <v-btn
                             :disabled="!registerValid"
-                            color="success"
+                            large
+                            outlined
+                            color="primary"
                             class="mr-4"
                             @click="validateRegister"
                         >
@@ -94,30 +104,23 @@
         </v-sheet>
 
         <v-list shaped>
-            <router-link :to="{ name: 'home' }">
-                <v-list-item link>
-                    <v-list-item-content>
-                        <v-list-item-title> Main Channel </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </router-link>
-            <router-link :to="{ name: 'example' }">
-                <v-list-item link>
-                    <v-list-item-content>
-                        <v-list-item-title>
-                            Private Channels<br />
-                            (work in progress)
-                        </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </router-link>
-            <router-link :to="{ name: 'rien' }">
-                <v-list-item link>
-                    <v-list-item-content>
-                        <v-list-item-title> About </v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </router-link>
+            <v-list-item link :to="{ name: 'main' }">
+                <v-list-item-content>
+                    <v-list-item-title> Main Channel </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+            <v-list-item link :to="{ name: 'private' }">
+                <v-list-item-content>
+                    <v-list-item-title>
+                        Private Channels (WIP)
+                    </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+            <v-list-item link :to="{ name: 'about' }">
+                <v-list-item-content>
+                    <v-list-item-title> About </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
         </v-list>
     </v-navigation-drawer>
 </template>
@@ -129,7 +132,7 @@ export default {
     name: "left-drawer-layout",
     data() {
         return {
-            user: null,
+            // user: voir le computed user(),
             loginValid: true,
             registerValid: true,
             loginForm: false,
@@ -157,29 +160,35 @@ export default {
             ],
         };
     },
-    created() {
-        axios.get("/sanctum/csrf-cookie").then((response) => {
-            this.getUser();
-        });
+    computed: {
+        user() {
+            if (this.$store.getters.isConnected) {
+                return this.$store.getters.user;
+            } else {
+                return null;
+            }
+        },
+        drawer() {
+            return this.$store.getters.drawer;
+        },
     },
     methods: {
+        checkInput(event) {
+            this.$store.dispatch("updateDrawer", event);
+        },
         logout: function () {
             axios.post("/logout").then((Response) => {
+                // TODO: est-ce que le post /logout suffit ? ne pas refresh les cookies/token ?
                 location.reload();
             });
         },
-        toggleLogin: function () {
+        toggleLogin() {
             this.loginForm = !this.loginForm;
             this.registerForm = false;
         },
-        toggleRegister: function () {
+        toggleRegister() {
             this.registerForm = !this.registerForm;
             this.loginForm = false;
-        },
-        getUser() {
-            axios.get("/api/user").then((Response) => {
-                this.user = Response.data;
-            });
         },
         validateLogin() {
             if (this.$refs.loginForm.validate()) {
@@ -189,10 +198,9 @@ export default {
                         password: this.password,
                     })
                     .then((Response) => {
-                        this.getUser();
-                        // TODO: remove this reload after setting up VueX
                         location.reload();
                     });
+                // TODO: catch error dans le login
             }
         },
         validateRegister() {
@@ -207,8 +215,14 @@ export default {
                     .then((Response) => {
                         console.log(Response);
                         if (Response.status == 201) {
-                            // faut refresh les cookies entre 2 inscriptions sinon la deuxième ne marche pas
-                            location.reload();
+                            axios
+                                .post("/login", {
+                                    name: this.usernameRegister,
+                                    password: this.passwordRegister,
+                                })
+                                .then((Response) => {
+                                    location.reload();
+                                });
                         }
                     });
             }
@@ -217,4 +231,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.v-list-item--active {
+    background-color: #00796b !important;
+    color: white !important;
+}
+</style>

@@ -31,6 +31,11 @@ export default {
             drawer: null,
         };
     },
+    created() {
+        axios.get("/sanctum/csrf-cookie").then((response) => {
+            this.$store.dispatch("connectUser");
+        });
+    },
 };
 </script>
 

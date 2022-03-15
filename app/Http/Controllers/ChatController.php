@@ -26,9 +26,9 @@ class ChatController extends Controller
     public function create(Request $request)
     {
         if (auth()->check()) {
-            event(new ChatMessageEvent(auth()->user()->name, $request['message']));
+            ChatMessageEvent::dispatch(auth()->user()->name, $request['message']);
         } else {
-            event(new ChatMessageEvent('Anonymous', $request['message']));
+            ChatMessageEvent::dispatch('Anonymous', $request['message']);
         }
     }
 

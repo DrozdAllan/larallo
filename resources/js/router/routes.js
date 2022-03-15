@@ -1,18 +1,22 @@
 const routes = [
     {
-        path: "/",
-        component: () => import("../views/HomeView.vue"),
-        name: "home",
+        path: "/main",
+        component: () => import("../views/MainView.vue"),
+        name: "main",
     },
     {
-        path: "/example",
-        component: () => import("../views/ExampleView.vue"),
-        name: "example",
+        path: "/private",
+        component: () => import("../views/PrivateView.vue"),
+        name: "private",
     },
     {
-        path: "/rien",
-        component: () => import("../views/RienView.vue"),
-        name: "rien",
+        path: "/about",
+        component: () => import("../views/AboutView.vue"),
+        name: "about",
+    },
+    {
+        path: "*",
+        redirect: "/main",
     },
 ];
 

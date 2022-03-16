@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use DateTime;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -16,16 +17,18 @@ class ChatMessageEvent implements ShouldBroadcast
 
     public $username;
     public $message;
+    public $date;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(string $username, string $message)
+    public function __construct(string $username, string $message, string $date)
     {
         $this->username = $username;
         $this->message = $message;
+        $this->date = $date;
     }
 
     /**

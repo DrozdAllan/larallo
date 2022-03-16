@@ -8,6 +8,7 @@
                     :key="index"
                     class="py-1"
                 >
+                    ({{ message.date }})
                     <b
                         v-if="user != null"
                         :class="

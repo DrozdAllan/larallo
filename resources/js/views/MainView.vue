@@ -12,7 +12,7 @@
                     <b
                         v-if="user != null"
                         :class="
-                            message.username == user.name ? 'primary--text' : ''
+                            message.username === user.name ? 'primary--text' : ''
                         "
                     >
                         {{ message.username }}</b
@@ -44,7 +44,7 @@ export default {
         // TODO: Enable pusher logging - don't include this in production
         // Pusher.logToConsole = true;
 
-        var channel = Echo.channel("MainChannel");
+        const channel = Echo.channel("MainChannel");
         channel.listen("ChatMessageEvent", (data) => {
             this.messages.push(data);
         });

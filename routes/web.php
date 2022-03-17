@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\ChatController;
-use App\Http\Controllers\TchatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +17,6 @@ Route::get('/{any?}', function () {
     return view('app');
 });
 
-Route::post('/msg', [ChatController::class, 'create']);
+Route::post('/msg', [\App\Http\Controllers\ChatController::class, 'create']);
+
+Route::post('/newChannel', [\App\Http\Controllers\PrivateChannelController::class, 'createChannel']);

@@ -7,7 +7,8 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production"
+        "production": "mix --production",
+        "heroku-postbuild": "mix --production"
     },
     "devDependencies": {
         "@popperjs/core": "^2.10.2",
@@ -30,5 +31,9 @@
         "vue-router": "^3.5.3",
         "vuetify": "^2.6.3",
         "vuex": "^3.6.2"
+    },
+    "engines": {
+        "node": "16.13.2",
+        "npm": "8.1.2"
     }
 }

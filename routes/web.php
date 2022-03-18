@@ -19,4 +19,4 @@ Route::get('/{any?}', function () {
 
 Route::post('/msg', [\App\Http\Controllers\ChatController::class, 'create']);
 
-Route::post('/newChannel', [\App\Http\Controllers\PrivateChannelController::class, 'createChannel']);
+Route::post('/privateChannel', [\App\Http\Controllers\PrivateChannelController::class, 'privateChannel']);

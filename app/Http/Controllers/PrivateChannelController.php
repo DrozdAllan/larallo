@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PrivateMessageEvent;
 use Illuminate\Http\Request;
 
 class PrivateChannelController extends Controller
@@ -10,9 +11,8 @@ class PrivateChannelController extends Controller
      * @param Request $request
      * @return void
      */
-    public function createChannel(Request $request)
+    public function privateChannel(Request $request)
     {
-        $channelName = $request['channelName'];
-        dd($channelName);
+        PrivateMessageEvent::dispatch($request['channelName'], auth()->user()->name, $request['message'], date("H:i:s"));
     }
 }

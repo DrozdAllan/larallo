@@ -12,13 +12,14 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
-
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+    return (int)$user->id === (int)$id;
 });
-
 Broadcast::channel('online', function ($user) {
     if (auth()->check()) {
         return $user->toArray();
     }
+});
+Broadcast::channel('{anything}', function ($user) {
+    return true;
 });

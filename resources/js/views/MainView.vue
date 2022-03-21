@@ -1,25 +1,28 @@
 <template>
   <v-container>
     <h2 class="text-center primary--text py-3">Main Channel</h2>
-    <div>
+    <div v-if="user != null">
       <ul>
         <li
             v-for="(message, index) in messages"
             :key="index"
             class="py-1"
-        >
+            :class="message.username === user.name ? 'text-right' : 'text-left'">
           ({{ message.date }})
-          <b
-              v-if="user != null"
-              :class="
-                            message.username === user.name ? 'primary--text' : ''
-                        "
-          >
-            {{ message.username }}</b
-          >
-          <b v-else>
-            {{ message.username }}
-          </b>
+          <b :class="message.username === user.name ? 'primary--text' : ''">
+            {{ message.username }} </b>
+          : {{ message.message }}
+        </li>
+      </ul>
+    </div>
+    <div v-else>
+      <ul>
+        <li
+            v-for="(message, index) in messages"
+            :key="index"
+            class="py-1">
+          ({{ message.date }})
+          <b> {{ message.username }} </b>
           : {{ message.message }}
         </li>
       </ul>

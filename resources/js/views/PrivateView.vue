@@ -1,80 +1,73 @@
 <template>
   <v-container>
     <h2 class="text-center primary--text py-3">Private channels</h2>
-    <p class="text-center">Work in progress</p>
-
-    <span v-if="!isConnected">
-      You must be connected to use private channels    </span>
+    <v-container class="text-center" v-if="messageField">
+      <v-btn small outlined color="error" @click="stopChannel">
+        Stop listening to this channel
+      </v-btn>
+    </v-container>
+    <v-container v-if="!isConnected" class="text-center">
+      You must be connected to use private channels
+    </v-container>
     <v-container v-else>
-      <v-form
+      <v-row justify="center">
+        <v-col cols="6" class="text-center">
+          <v-form
 
-          v-if="!messageForm"
-          ref="channelForm"
-          v-model="channelValid"
-          lazy-validation
-      >
-        <v-text-field
-            v-model="channelName"
-            :counter="10"
-            :rules="channelNameRules"
-            label="Select the channel name you want to listen"
-            required
-            @keydown.enter="validateForm"
-        ></v-text-field>
-        <v-btn
-            :disabled="!channelValid"
-            large
-            outlined
-            color="primary"
-            class="mr-4"
-            @click="validateForm"
-        >
-          Validate
-        </v-btn>
-      </v-form>
-      <v-container v-if="messageForm">
-
-        <v-form
-            ref="messageForm"
-            v-model="messageValid"
-            :rules="messageRules"
-            lazy-validation
-        >
-          <v-text-field
-              v-model="message"
-              :counter="10"
-              :label="'send a message to the channel ' + this.channelName"
-              required
-          ></v-text-field>
-          <v-btn large outlined color="error" @click="stopChannel">
-            Stop listening to this channel
-          </v-btn>
-          <v-btn
-              large
-              outlined
-              color="primary"
-              class="mr-4"
-              @click="validateMessageForm"
+              v-if="!messageField"
+              ref="channelForm"
+              v-model="channelValid"
+              lazy-validation
           >
-            Validate
-          </v-btn>
-        </v-form>
+            <v-text-field
+                v-model="channelName"
+                :counter="10"
+                :rules="channelNameRules"
+                label="Select the channel name you want to listen"
+                required
+                @keydown.space.prevent
+                @keydown.enter="validateForm"
+            ></v-text-field>
+            <v-btn
+                :disabled="!channelValid"
+                large
+                outlined
+                color="primary"
+                class="mr-4"
+                @click="validateForm"
+            >
+              Validate
+            </v-btn>
+          </v-form>
+        </v-col>
+      </v-row>
+      <v-container v-if="messageField">
+        <v-footer ref="messageField" app color="transparent" height="72" inset>
+          <v-row dense>
+            <v-text-field
+                background-color="grey lighten-3"
+                flat
+                rounded
+                filled
+                v-model="message"
+                append-outer-icon="mdi-send"
+                @click:append-outer="sendMessage"
+                @keydown.enter="sendMessage"
+                :label="'Enter your message to ' + this.channelName + ' (do not send private data)'"
+            ></v-text-field>
+          </v-row>
+        </v-footer>
         <div>
           <ul>
             <li
                 v-for="(message, index) in messages"
                 :key="index"
                 class="py-1"
-            >
+                :class="message.username === user.name ? 'text-right' : 'text-left'">
               ({{ message.date }})
-              <b
-                  v-if="user != null"
-                  :class="
-                            message.username === user.name ? 'primary--text' : ''
-                        "
-              >
-                {{ message.username }}</b
-              >
+              <b v-if="user != null"
+                 :class="message.username === user.name ? 'primary--text' : ''">
+                {{ message.username }} </b>
               <b v-else>
                 {{ message.username }}
               </b>
@@ -97,15 +90,12 @@ export default {
       messages: [],
       channelValid: false,
       channelName: '',
-      messageForm: false,
-      messageValid: true,
+      messageField: false,
       message: '',
       channelNameRules: [
-        value => !!value || "Required."
+        value => !!value || "Required.",
+        value => /^[A-z\d]*$/.test(value) || 'Channel name is invalid',
       ],
-      messageRules: [
-        value => !!value || "Required."
-      ]
     }
   },
   computed: {
@@ -119,18 +109,16 @@ export default {
   methods: {
     validateForm() {
       if (this.$refs.channelForm.validate()) {
-        this.messageForm = true;
+        this.messageField = true;
         this.connectToChannel();
       }
     },
-    validateMessageForm() {
-      if (this.$refs.messageForm.validate()) {
-        axios.post("/privateChannel", {
-          channelName: this.channelName,
-          message: this.message,
-        })
-        this.message = '';
-      }
+    sendMessage() {
+      axios.post("/privateChannel", {
+        channelName: this.channelName,
+        message: this.message,
+      })
+      this.message = '';
     },
     connectToChannel() {
       Echo.private(this.channelName).listen("PrivateMessageEvent", (data) => {
@@ -140,10 +128,16 @@ export default {
     stopChannel() {
       Echo.leaveChannel(this.channelName);
       this.channelName = '';
-      this.messageForm = false;
+      this.messageField = false;
       this.messages = null;
     }
   }
 }
 
 </script>
+
+<style>
+ul {
+  list-style: none;
+}
+</style>

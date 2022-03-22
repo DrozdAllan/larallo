@@ -51,6 +51,7 @@
               hint="At least 8 characters"
               counter
               @focus="removeError"
+              @keydown.enter="validateLogin"
               @click:append="show1 = !show1"
           ></v-text-field>
           <v-btn

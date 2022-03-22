@@ -1,8 +1,8 @@
 <template>
-  <v-container>
+  <v-container class="zinzin">
     <h2 class="text-center primary--text py-3">Main Channel</h2>
     <div v-if="user != null">
-      <ul>
+      <ul class="px-0 px-lg-10">
         <li
             v-for="(message, index) in messages"
             :key="index"
@@ -16,7 +16,7 @@
       </ul>
     </div>
     <div v-else>
-      <ul>
+      <ul class="px-0 px-lg-10">
         <li
             v-for="(message, index) in messages"
             :key="index"
@@ -60,6 +60,9 @@ export default {
 </script>
 
 <style>
+.zinzin {
+  word-break: break-word;
+}
 ul {
   list-style: none;
 }

@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container class="zinzin">
     <h2 class="text-center primary--text py-3">Private channels</h2>
     <v-container class="text-center" v-if="messageField">
-      <v-btn small outlined color="error" @click="stopChannel">
-        Stop listening to this channel
+      <v-btn small outlined color="error" @click="stopChannel" class="no-uppercase">
+        Stop listening to {{ channelName }}
       </v-btn>
     </v-container>
     <v-container v-if="!isConnected" class="text-center">
@@ -58,7 +58,7 @@
           </v-row>
         </v-footer>
         <div>
-          <ul>
+          <ul class="px-0 px-lg-10">
             <li
                 v-for="(message, index) in messages"
                 :key="index"
@@ -77,7 +77,6 @@
         </div>
       </v-container>
     </v-container>
-
   </v-container>
 </template>
 
@@ -137,6 +136,14 @@ export default {
 </script>
 
 <style>
+.zinzin {
+  word-break: break-word;
+}
+
+.no-uppercase {
+  text-transform: unset !important;
+}
+
 ul {
   list-style: none;
 }
